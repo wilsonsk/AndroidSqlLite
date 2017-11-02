@@ -6,6 +6,9 @@ import {
 	StyleSheet 
 } from 'react-native';
 
+import Instructions from '../components/Instructions';
+import SubmitButton from '../components/SubmitButton';
+
 export default class InputScreen extends Component<{}>{
 	constructor(props){
 		super(props);
@@ -18,9 +21,8 @@ export default class InputScreen extends Component<{}>{
 	render(){
 		return(
 			<View style={styles.container}>
-				<Text style={styles.content}>
-					TEST InputScreen
-				</Text>
+				<Instructions />
+				<SubmitButton />
 			</View>
 
 		);

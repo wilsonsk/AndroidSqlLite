@@ -6,9 +6,11 @@
 
 import React, { Component } from 'react';
 import {
+  FlatList,
   StyleSheet,
   Text,
-  View
+  View,
+  Button
 } from 'react-native';
 
 import { StackNavigator } from 'react-navigation';
@@ -29,11 +31,18 @@ class HomeScreen extends Component<{}> {
 	};
 
 	render() {
+		const { navigate } = this.props.navigation;
 		return(
 			<View style={styles.container}>
-				<Text style={styles.content}>
-					Test HomeScreen
-				</Text>
+				<FlatList
+					style={styles.content}
+					data={this.state.screenData}
+					keyExtractor={item => item.activity}
+					renderItem={({ item }) => 
+						<View>  
+							<Button onPress={() => navigate(item.activity)} title={item.title} />
+						</View>}
+				/>
 			</View>
 
 		);
@@ -52,9 +61,6 @@ export default App = StackNavigator({
 const styles = StyleSheet.create({
   container: {
 	flex: 1,
-	justifyContent: 'center',
-	alignItems: 'center',
-	backgroundColor: '#F5FCFF',
   },
   content: {
 	flex: 1,
