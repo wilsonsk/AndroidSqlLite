@@ -6,6 +6,8 @@ import {
 	StyleSheet 
 } from 'react-native';
 
+import SqlButton from '../components/SqlButton';
+
 export default class InputScreen extends Component<{}>{
 	constructor(props){
 		super(props);
