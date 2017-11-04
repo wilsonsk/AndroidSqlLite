@@ -1,30 +1,27 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-export default class Instructions extends Component<{}>{
-	constructor(props){
-		super(props);
-	}
-	
-	render(){
-		return(
-			<View style={styles.container}>
-				<Text style={styles.content}>
-					Type in a message to save to SqlLite
-				</Text>
-			</View>
-		);
-	}
-}
+const Instructions = (props) => (
+	<View style={styles.container}>
+		<Text style={styles.content}>
+			{props.text}
+		</Text>
+	</View>
+);
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		flexDirection: 'column'
+		flex: 3,
+		flexDirection: 'column',
+		backgroundColor: '#dc4405',
+		alignSelf: 'stretch'
 	},
 
 	content: {
 		flex: 1,
-		fontSize: 25
+		fontSize: 25,
+		textAlign: 'center',
 	}
 });
+
+export default Instructions;

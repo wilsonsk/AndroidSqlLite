@@ -8,6 +8,18 @@ import {
 
 import Instructions from '../components/Instructions';
 import SubmitButton from '../components/SubmitButton';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+
+const instructions = {
+	text: "Type a message to send to SqLite"
+};
+
+const projData = {
+	author: "Sky Wilson",
+	appName: "AndroidUI SqLite",
+	footer: "Oregon State University: CS496"
+};
 
 export default class InputScreen extends Component<{}>{
 	constructor(props){
@@ -21,8 +33,10 @@ export default class InputScreen extends Component<{}>{
 	render(){
 		return(
 			<View style={styles.container}>
-				<Instructions />
-				<SubmitButton />
+				<Header style={styles.content} author={projData.author} appName={projData.appName} /> 
+				<Instructions style={styles.content} text={instructions.text} />
+				<SubmitButton style={styles.content} />
+				<Footer style={styles.content} text={projData.footer} />
 			</View>
 
 		);

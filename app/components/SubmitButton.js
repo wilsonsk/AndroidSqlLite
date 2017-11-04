@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { PermissionsAndroid, TextInput, StyleSheet, View, Button } from 'react-native';
 
 var SQLite = require('react-native-sqlite-storage')
+var GOLDEN_RATIO = 1.61803398875;
 
 export default class SubmitButton extends Component<{}>{
 	constructor(props){
@@ -51,7 +52,6 @@ export default class SubmitButton extends Component<{}>{
 				// Extract location data
 				// and insert both attributes of this object in Sqlite
 				this.getAndPutSqlite(res);
-				// resolve promise
 
 			} else {
 				alert("Rejected: Location permission rejected");
@@ -72,6 +72,7 @@ export default class SubmitButton extends Component<{}>{
 			sql_latitude = JSON.stringify(this.state.latitude);
 			sql_text = JSON.stringify(this.state.text);
 			db.executeSql('INSERT INTO Messages (longitude, latitude, text) VALUES (' + sql_longitude + ', ' + sql_latitude + ', ' + sql_text + ');'); 
+			// resolve promise
 			res();
 		});
 	}
@@ -102,9 +103,10 @@ export default class SubmitButton extends Component<{}>{
 
 const styles = StyleSheet.create({
 	container: { 
-		flex: 1
+		flex: GOLDEN_RATIO,
+		flexDirection: 'column',
 	},
 	content: {
-		flex: 1
+		flex: 1,
 	}
 });
