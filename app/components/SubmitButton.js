@@ -17,7 +17,16 @@ export default class SubmitButton extends Component<{}>{
 	}
 
 	pressSubmit = () => {
+		// Request location Permissions
 		this.requestLocationPermission();
+
+
+		// Extract location data
+		
+		// Extract text data from input component
+		
+		// insert both attributes of this object in Sqlite
+
 	}
 
 	async requestLocationPermission(){
@@ -31,12 +40,20 @@ export default class SubmitButton extends Component<{}>{
 			)
 			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 				alert("You can use the location")
+				this.getLocation();
 			} else {
 				alert("Camera permission location")
 			}
 		} catch (err) {
 			console.warn(err)
 		}
+	}
+
+
+	getLocation = () => {
+		navigator.geolocation.getCurrentPosition((pos) => {
+			alert("POSITION: " + JSON.stringify(pos));
+		});
 	}
 
 	render(){
@@ -46,6 +63,7 @@ export default class SubmitButton extends Component<{}>{
 			</View>
 		);
 	}
+
 }
 
 const styles = StyleSheet.create({
