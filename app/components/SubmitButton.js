@@ -12,14 +12,15 @@ export default class SubmitButton extends Component<{}>{
 		}
         	db = SQLite.openDatabase('android-sqlite.db', SQLite.OPEN_READWRITE);
 		db.executeSql('CREATE TABLE IF NOT EXISTS Messages( '
-			+ 'geolocation FLOAT, '
+			+ 'longitude FLOAT, '
+			+ 'latitude FLOAT, '
 			+ 'text VARCHAR(55));');
 	}
 
 	pressSubmit = () => {
 		// Request location Permissions
 		// Refactored using promises
-		this.requestLocationPermissions()
+		this.requestLocationPermissions();
 	}
 
 
@@ -29,14 +30,7 @@ export default class SubmitButton extends Component<{}>{
 		});
 
 		granted.then(() => {
-
-			// Extract location data
-			this.getLocation();
-				
-			// Extract text data from input component
-			this.getText();
-				
-			// insert both attributes of this object in Sqlite
+			alert(`State after Sql Push: ${JSON.stringify(this.state)}`);
 		});
 		granted.catch((err) => {
 			alert('something is wrong with promise');
@@ -54,8 +48,10 @@ export default class SubmitButton extends Component<{}>{
 			)
 			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 				alert("Resolved: You can use the location");
+				// Extract location data
+				// and insert both attributes of this object in Sqlite
+				this.getAndPutSqlite(res);
 				// resolve promise
-				res();
 
 			} else {
 				alert("Rejected: Location permission rejected");
@@ -68,11 +64,21 @@ export default class SubmitButton extends Component<{}>{
 	}
 
 
-	getLocation = () => {
+	getAndPutSqlite = (res) => {
 		navigator.geolocation.getCurrentPosition((pos) => {
-			this.setState({pos});
-			alert("POSITION: " + JSON.stringify(this.state.pos));
+			this.setState({longitude: pos.coords.longitude});
+			this.setState({latitude: pos.coords.latitude});
+			sql_longitude = JSON.stringify(this.state.longitude);
+			sql_latitude = JSON.stringify(this.state.latitude);
+			sql_text = JSON.stringify(this.state.text);
+			db.executeSql('INSERT INTO Messages (longitude, latitude, text) VALUES (' + sql_longitude + ', ' + sql_latitude + ', ' + sql_text + ');'); 
+			res();
 		});
+	}
+
+	showEntry = (obj) => {
+		alert(`test: ${JSON.stringify(obj)}`);	
+		
 	}
 
 	getText = () => {
