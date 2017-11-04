@@ -7,7 +7,8 @@ export default class SubmitButton extends Component<{}>{
 	constructor(props){
 		super(props);
 		this.state = {
-			buttonText: "Submit Message"
+			buttonText: "Submit Message",
+			granted: false
 		}
         	db = SQLite.openDatabase('android-sqlite.db', SQLite.OPEN_READWRITE);
 		db.executeSql('CREATE TABLE IF NOT EXISTS Messages( '
@@ -17,14 +18,32 @@ export default class SubmitButton extends Component<{}>{
 
 	pressSubmit = () => {
 		// Request location Permissions
-		this.requestLocationPermission();
-
-
-		
-
+		// Refactored using promises
+		this.requestLocationPermissions()
 	}
 
-	async requestLocationPermission(){
+
+	requestLocationPermissions = () => {
+		var granted = new Promise((resolve, reject) => {
+			this._requestLocationPermissions(resolve, reject);
+		});
+
+		granted.then(() => {
+
+			// Extract location data
+			this.getLocation();
+				
+			// Extract text data from input component
+			this.getText();
+				
+			// insert both attributes of this object in Sqlite
+		});
+		granted.catch((err) => {
+			alert('something is wrong with promise');
+		});
+	}
+
+	async _requestLocationPermissions(res, rej){
 		try {
 			const granted = await PermissionsAndroid.request(
 				PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
@@ -34,18 +53,14 @@ export default class SubmitButton extends Component<{}>{
 				}
 			)
 			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-				alert("You can use the location")
-				
-				// Extract location data
-				this.getLocation();
-				
-				// Extract text data from input component
-				this.getText();
-				
-				// insert both attributes of this object in Sqlite
+				alert("Resolved: You can use the location");
+				// resolve promise
+				res();
 
 			} else {
-				alert("Camera permission location")
+				alert("Rejected: Location permission rejected");
+				// reject promise
+				rej();
 			}
 		} catch (err) {
 			console.warn(err)
