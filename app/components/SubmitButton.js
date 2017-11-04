@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Button } from 'react-native';
-import { PermissionsAndroid } from 'react-native';
+import { PermissionsAndroid, TextInput, StyleSheet, View, Button } from 'react-native';
 
 var SQLite = require('react-native-sqlite-storage')
 
@@ -21,11 +20,7 @@ export default class SubmitButton extends Component<{}>{
 		this.requestLocationPermission();
 
 
-		// Extract location data
 		
-		// Extract text data from input component
-		
-		// insert both attributes of this object in Sqlite
 
 	}
 
@@ -40,7 +35,15 @@ export default class SubmitButton extends Component<{}>{
 			)
 			if (granted === PermissionsAndroid.RESULTS.GRANTED) {
 				alert("You can use the location")
+				
+				// Extract location data
 				this.getLocation();
+				
+				// Extract text data from input component
+				this.getText();
+				
+				// insert both attributes of this object in Sqlite
+
 			} else {
 				alert("Camera permission location")
 			}
@@ -52,13 +55,23 @@ export default class SubmitButton extends Component<{}>{
 
 	getLocation = () => {
 		navigator.geolocation.getCurrentPosition((pos) => {
-			alert("POSITION: " + JSON.stringify(pos));
+			this.setState({pos});
+			alert("POSITION: " + JSON.stringify(this.state.pos));
 		});
+	}
+
+	getText = () => {
+		alert(this.state.text);
 	}
 
 	render(){
 		return(
 			<View style={styles.container}>
+				<TextInput
+					style={styles.content}
+					onChangeText={(text) => this.setState({text})}
+					value={this.state.text}
+				/>
 				<Button onPress={this.pressSubmit} style={styles.content} title={this.state.buttonText} /> 
 			</View>
 		);
