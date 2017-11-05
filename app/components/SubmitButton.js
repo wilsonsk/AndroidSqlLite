@@ -82,15 +82,6 @@ export default class SubmitButton extends Component<{}>{
 		});
 	}
 
-	showEntry = (obj) => {
-		alert(`test: ${JSON.stringify(obj)}`);	
-		
-	}
-
-	getText = () => {
-		alert(this.state.text);
-	}
-
 	render(){
 		return(
 			<View style={styles.container}>
