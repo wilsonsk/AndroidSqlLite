@@ -73,7 +73,7 @@ export default class InputScreen extends Component<{}>{
 		return(
 			<View style={styles.container}>
 				<Header style={styles.content} author={projData.author} appName={projData.appName} /> 
-				<Instructions style={styles.content} text={instructions.text} newData={this.state.queryRes} />
+				<Instructions style={styles.content} text={instructions.text} newData={this.state.queryRes.reverse()} />
 				<SubmitButton style={styles.content} handler={this.handleResUpdate}/>
 				<Footer style={styles.content} text={projData.footer} />
 			</View>

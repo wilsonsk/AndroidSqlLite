@@ -15,7 +15,7 @@ class Instructions extends Component<{}>{
 				</Text>
 				<FlatList 
 					style={styles.content}
-					extraData={this.state}
+					extraData={this.props}
 					data={this.props.newData}
 					renderItem={({ item }) =>
 						<View>
