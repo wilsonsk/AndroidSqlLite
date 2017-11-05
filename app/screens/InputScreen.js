@@ -64,8 +64,7 @@ export default class InputScreen extends Component<{}>{
 	};
 
 	handleResUpdate(){
-		alert('parent state change triggered');
-		//this.setState({ newData: true });
+		this.setState({ queryRes: [] });
 		this.getData();
 	}
 

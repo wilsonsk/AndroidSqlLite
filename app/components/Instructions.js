@@ -7,6 +7,10 @@ class Instructions extends Component<{}>{
 		super(props);
 	}
 
+	_uniqueKey(){
+		return '_' + Math.random().toString(36).substr(2, 9);
+	}
+
 	render(){
 		return(	
 			<View style={styles.container}>
@@ -16,6 +20,7 @@ class Instructions extends Component<{}>{
 				<FlatList 
 					style={styles.content}
 					extraData={this.props}
+					keyExtractor={item => this._uniqueKey()}
 					data={this.props.newData}
 					renderItem={({ item }) =>
 						<View>

@@ -39,7 +39,7 @@ export default class SubmitButton extends Component<{}>{
 
 		granted.then(() => {
 			// send signal before next screen
-			alert(`State after Sql Push: ${JSON.stringify(this.state)}`);
+			//alert(`State after Sql Push: ${JSON.stringify(this.state)}`);
 			// render results
 			this.props.handler();
 
