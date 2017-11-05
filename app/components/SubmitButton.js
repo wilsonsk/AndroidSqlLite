@@ -41,6 +41,7 @@ export default class SubmitButton extends Component<{}>{
 			// send signal before next screen
 			alert(`State after Sql Push: ${JSON.stringify(this.state)}`);
 			// render results
+			this.props.handler();
 
 		});
 		granted.catch((err) => {
@@ -65,8 +66,8 @@ export default class SubmitButton extends Component<{}>{
 
 			} else {
 				alert("Rejected: Location permission rejected");
-				// reject promise
-				rej();
+				// insert only the text value into sqlite
+				getAndPutSqlite_denied(res);
 			}
 		} catch (err) {
 			console.warn(err)
@@ -87,6 +88,15 @@ export default class SubmitButton extends Component<{}>{
 			res();
 		});
 	}
+
+	getAndPutSqlite_denied = (res) => {
+		sql_text = JSON.stringify(this.state.text);
+			
+		db.executeSql('INSERT INTO Messages (longitude, latitude, text) VALUES ( -123.2, 44.5, ' + sql_text + ');'); 
+		// resolve promise
+		res();
+	}
+
 
 	render(){
 		return(
