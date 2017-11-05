@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { PermissionsAndroid, TextInput, StyleSheet, View, Button } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
 var SQLite = require('react-native-sqlite-storage')
 var GOLDEN_RATIO = 1.61803398875;
@@ -9,7 +10,8 @@ export default class SubmitButton extends Component<{}>{
 		super(props);
 		this.state = {
 			buttonText: "Submit Message",
-			granted: false
+			granted: false,
+			postScreen: [{screen: "NextScreen"}]
 		}
         	db = SQLite.openDatabase('android-sqlite.db', SQLite.OPEN_READWRITE);
 		db.executeSql('CREATE TABLE IF NOT EXISTS Messages( '
@@ -31,7 +33,10 @@ export default class SubmitButton extends Component<{}>{
 		});
 
 		granted.then(() => {
+			// send signal before next screen
 			alert(`State after Sql Push: ${JSON.stringify(this.state)}`);
+			// render results
+
 		});
 		granted.catch((err) => {
 			alert('something is wrong with promise');

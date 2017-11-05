@@ -1,13 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { FlatList, View, Text, StyleSheet } from 'react-native';
+var SQLite = require('react-native-sqlite-storage');
+let db;
 
-const Instructions = (props) => (
-	<View style={styles.container}>
-		<Text style={styles.content}>
-			{props.text}
-		</Text>
-	</View>
-);
+class Instructions extends Component<{}>{
+	componentWillMount(){
+		db = SQLite.openDatabase('android-sqlite.db', SQLite.OPEN_READWRITE);
+		alert(db);
+	}
+
+	render(){
+		return(	
+			<View style={styles.container}>
+				<Text style={styles.content}>
+					{this.props.text}
+				</Text>
+				<FlatList style={styles.content}>
+				
+				</FlatList>
+			</View>
+		);
+	}
+};
 
 const styles = StyleSheet.create({
 	container: {
