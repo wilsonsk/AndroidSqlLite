@@ -5,6 +5,8 @@ import { StackNavigator } from 'react-navigation';
 var SQLite = require('react-native-sqlite-storage')
 var GOLDEN_RATIO = 1.61803398875;
 
+let db;
+
 export default class SubmitButton extends Component<{}>{
 	constructor(props){
 		super(props);
@@ -13,6 +15,9 @@ export default class SubmitButton extends Component<{}>{
 			granted: false,
 			postScreen: [{screen: "NextScreen"}]
 		}
+	}
+
+	componentWillMount(){
         	db = SQLite.openDatabase('android-sqlite.db', SQLite.OPEN_READWRITE);
 		db.executeSql('CREATE TABLE IF NOT EXISTS Messages( '
 			+ 'longitude FLOAT, '
@@ -76,6 +81,7 @@ export default class SubmitButton extends Component<{}>{
 			sql_longitude = JSON.stringify(this.state.longitude);
 			sql_latitude = JSON.stringify(this.state.latitude);
 			sql_text = JSON.stringify(this.state.text);
+			
 			db.executeSql('INSERT INTO Messages (longitude, latitude, text) VALUES (' + sql_longitude + ', ' + sql_latitude + ', ' + sql_text + ');'); 
 			// resolve promise
 			res();

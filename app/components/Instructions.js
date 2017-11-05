@@ -11,6 +11,11 @@ class Instructions extends Component<{}>{
 	}
 	componentWillMount(){
 		db = SQLite.openDatabase('android-sqlite.db', SQLite.OPEN_READWRITE);
+		db.executeSql('CREATE TABLE IF NOT EXISTS Messages( '
+			+ 'longitude FLOAT, '
+			+ 'latitude FLOAT, '
+			+ 'text VARCHAR(55));');
+
 		db.transaction((tx) => {
 			tx.executeSql('SELECT * FROM Messages', [], (tx, res, err) => {
 				if(res){
@@ -35,6 +40,14 @@ class Instructions extends Component<{}>{
 				</Text>
 				<FlatList 
 					style={styles.content}
+					data={this.state.queryRes}
+					renderItem={({ item }) =>
+						<View>
+							<Text>
+								{item}
+							</Text>
+						</View>
+					}
 				/>
 			</View>
 		);
@@ -51,8 +64,6 @@ const styles = StyleSheet.create({
 
 	content: {
 		flex: 1,
-		fontSize: 25,
-		textAlign: 'center',
 	}
 });
 
